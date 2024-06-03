@@ -76,6 +76,10 @@ class Maintenance {
 				font-size: 18px; 
 				color: #555; 
 			}
+			svg { 
+				width: 150px; 
+				height: 150px; 
+			}
 			</style>';
 
 			$message = "<h1>$title</h1><p>$text</p>";
