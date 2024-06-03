@@ -76,7 +76,7 @@ class Maintenance {
 				font-size: 18px; 
 				color: #555; 
 			}
-			svg { 
+			img { 
 				width: 150px; 
 				height: 150px; 
 			}
