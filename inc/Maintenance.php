@@ -43,11 +43,16 @@ class Maintenance {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			$title = get_option( 'maintenance_title', 'Site Under Maintenance' );
 			$text  = get_option( 'maintenance_message', 'We are currently performing scheduled maintenance. Please check back later.' );
+			$img   = '<img src="' . plugin_dir_url( __DIR__ ) . 'assets/src/global/logo.svg" alt="Maintenance">';
 
 			$allowed_html = array(
 				'h1'    => array(),
 				'p'     => array(),
 				'style' => array(),
+				'img'   => array(
+					'src' => array(),
+					'alt' => array(),
+				),
 			);
 
 			$style = '<style>
@@ -75,7 +80,7 @@ class Maintenance {
 
 			$message = "<h1>$title</h1><p>$text</p>";
 
-			wp_die( wp_kses( $style . $message, $allowed_html ), esc_html( $title ), 503 );
+			wp_die( wp_kses( $style . $img . $message, $allowed_html ), esc_html( $title ) );
 		}
 	}
 
