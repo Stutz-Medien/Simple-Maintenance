@@ -22,7 +22,12 @@ class Maintenance {
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
+		$enable_settings = get_option( 'enable_settings' );
+
+		if ( $enable_settings ) {
+			add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
+		}
+
 		add_action( 'template_redirect', [ $this, 'enable_maintenance' ] );
 		add_action( 'admin_bar_menu', [ $this, 'add_maintenance_mode_button' ], 999 );
 		add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
@@ -36,7 +41,9 @@ class Maintenance {
 	 */
 	public function enable_maintenance() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( 'Site is under maintenance. Please check back later.' );
+			$message = get_option( 'maintenance_message', 'Site is under maintenance. Please check back later.' );
+
+			wp_die( esc_html( $message ), 'Maintenance Mode', 503 );
 		}
 	}
 
@@ -50,7 +57,7 @@ class Maintenance {
 		$args = [
 			'id'    => 'maintenance_mode',
 			'title' => 'Maintenance Mode',
-			'href'  => admin_url( 'options-general.php?page=maintenance' ),
+			'href'  => admin_url( 'options-general.php?page=maintenance-options' ),
 		];
 
 		$wp_admin_bar->add_node( $args );
@@ -87,6 +94,16 @@ class Maintenance {
 				'default'           => 'none',
 			)
 		);
+
+		register_setting(
+			'maintenance-settings-group',
+			'maintenance_message',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'Site is under maintenance. Please check back later.',
+			)
+		);
 	}
 
 	public function maintenance_options_page() {
@@ -112,6 +129,9 @@ class Maintenance {
 
 			$enable_settings = isset( $_POST['enable_settings'] ) ? 1 : 0;
 			update_option( 'hide_settings', $enable_settings );
+
+			$maintenance_message = isset( $_POST['maintenance_message'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_message'] ) ) : '';
+			update_option( 'maintenance_message', $maintenance_message );
 		}
 	}
 
@@ -132,10 +152,13 @@ class Maintenance {
 
 		$enable_settings = get_option( 'enable_settings' );
 
+		$maintenance_message = get_option( 'maintenance_message' );
+
 		echo '<table class="form-table">';
 		echo '<tr valign="top">';
 		echo '<th scope="row">Enable Maintenance Screen</th>';
 		echo '<td><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( 1, $enable_settings, false ) . ' /></td>';
+		echo "<td><input type='text' name='maintenance_message' value='" . esc_attr( $maintenance_message ) . "' /></td>";
 		echo '</tr>';
 		echo '</table>';
 
