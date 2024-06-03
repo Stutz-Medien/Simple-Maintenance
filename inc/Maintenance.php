@@ -41,9 +41,41 @@ class Maintenance {
 	 */
 	public function enable_maintenance() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$message = get_option( 'maintenance_message', 'Site is under maintenance. Please check back later.' );
+			$title = get_option( 'maintenance_title', 'Site Under Maintenance' );
+			$text  = get_option( 'maintenance_message', 'We are currently performing scheduled maintenance. Please check back later.' );
 
-			wp_die( esc_html( $message ), 'Maintenance Mode', 503 );
+			$allowed_html = array(
+				'h1'    => array(),
+				'p'     => array(),
+				'style' => array(),
+			);
+
+			$style = '<style>
+			body { 
+				background: #f1f1f1; 
+				font-family: Arial, sans-serif; 
+				display: flex; 
+				justify-content: center; 
+				align-items: center; 
+				height: 500px; 
+				text-align: center;
+				border: none;
+				box-shadow: none; 
+				background-color: #fff;
+			}
+			h1 { 
+				color: #4295a2; 
+				border: none;
+			}
+			p { 
+				font-size: 18px; 
+				color: #555; 
+			}
+			</style>';
+
+			$message = "<h1>$title</h1><p>$text</p>";
+
+			wp_die( wp_kses( $style . $message, $allowed_html ), esc_html( $title ), 503 );
 		}
 	}
 
@@ -97,6 +129,16 @@ class Maintenance {
 
 		register_setting(
 			'maintenance-settings-group',
+			'maintenance_title',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'Maintenance Mode',
+			)
+		);
+
+		register_setting(
+			'maintenance-settings-group',
 			'maintenance_message',
 			array(
 				'type'              => 'string',
@@ -130,6 +172,9 @@ class Maintenance {
 			$enable_settings = isset( $_POST['enable_settings'] ) ? 1 : 0;
 			update_option( 'hide_settings', $enable_settings );
 
+			$maintenance_title = isset( $_POST['maintenance_title'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_title'] ) ) : '';
+			update_option( 'maintenance_title', $maintenance_title );
+
 			$maintenance_message = isset( $_POST['maintenance_message'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_message'] ) ) : '';
 			update_option( 'maintenance_message', $maintenance_message );
 		}
@@ -152,13 +197,22 @@ class Maintenance {
 
 		$enable_settings = get_option( 'enable_settings' );
 
+		$maintenance_title   = get_option( 'maintenance_title' );
 		$maintenance_message = get_option( 'maintenance_message' );
 
 		echo '<table class="form-table">';
 		echo '<tr valign="top">';
 		echo '<th scope="row">Enable Maintenance Screen</th>';
 		echo '<td><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( 1, $enable_settings, false ) . ' /></td>';
-		echo "<td><input type='text' name='maintenance_message' value='" . esc_attr( $maintenance_message ) . "' /></td>";
+		echo '</tr>';
+		echo '<tr valign="top">';
+		echo '<th scope="row">Maintenance Texts</th>';
+		echo '</tr>';
+		echo '<tr valign="top">';
+		echo "<td><input type='text' name='maintenance_title' value='" . esc_attr( $maintenance_title ) . "' /></td>";
+		echo '</tr>';
+		echo '<tr valign="top">';
+		echo '<td><textarea type="text" id="maintenance_message" name="maintenance_message">' . esc_textarea( $maintenance_message ) . '</textarea></td>';
 		echo '</tr>';
 		echo '</table>';
 
