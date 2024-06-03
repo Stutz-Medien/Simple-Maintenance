@@ -1,0 +1,8 @@
+{
+    "extends": ["stylelint-config-standard-scss"],
+    "plugins": ["stylelint-scss"],
+    "rules": {
+        "scss/load-no-partial-leading-underscore": null,
+        "custom-property-pattern": null
+    }
+}

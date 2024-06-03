@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "target": "es6", // Compile to ECMAScript 2015 (ES6)
+        "module": "esnext", // Use ESNext module system
+        "lib": ["dom", "esnext"], // Include DOM and latest ECMAScript features
+        "allowJs": true, // Allow JavaScript files to be compiled
+        "checkJs": false, // Disable type-checking of JavaScript files
+        "jsx": "preserve", // Preserve JSX to be transformed by Babel
+        "declaration": true, // Generate .d.ts files
+        "outDir": "./dist", // Redirect output structure to the directory
+        "strict": true, // Enable all strict type-checking options
+        "strictNullChecks": true, // Enable strict null checks
+        "strictFunctionTypes": true, // Ensure functions' parameters and return types are consistent
+        "strictBindCallApply": true, // Ensure 'bind', 'call', and 'apply' methods are strictly checked
+        "strictPropertyInitialization": true, // Ensure non-undefined class properties are initialized in the constructor
+        "alwaysStrict": true, // Parse in strict mode and emit "use strict" for each source file
+        "esModuleInterop": true, // Enables '__importStar' and '__importDefault' helpers
+        "skipLibCheck": true, // Skip type checking of all declaration files (*.d.ts)
+        "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
+        "moduleResolution": "node", // Resolve modules using Node.js style
+        "baseUrl": ".", // Base directory to resolve non-relative module names
+        "paths": {
+            "@/*": ["assets/src/scripts/*"] // Add custom path mappings
+        },
+        "experimentalDecorators": true, // Enable experimental support for decorators
+        "emitDecoratorMetadata": true // Emit design-type metadata for decorated declarations
+    },
+    "include": ["assets/src/scripts/**/*"], // Include src directory
+    "exclude": ["node_modules", "dist"] // Exclude node_modules and dist directories
+}

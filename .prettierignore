@@ -1,0 +1,5 @@
+# Ignore artifacts:
+vendor
+wpcs
+node_modules
+assets/dist

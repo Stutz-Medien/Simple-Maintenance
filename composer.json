@@ -1,0 +1,36 @@
+{
+    "name": "utils/silencer",
+    "description": "Surpresses all comments on your WordPress site.",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Andrin Haldner",
+            "homepage": "https://github.com/AHaldner"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Utils\\Plugins\\": "inc/"
+        }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.8",
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcsstandards/phpcsutils": "^1.0"
+    },
+    "scripts": {
+        "lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+        "lint:wpcs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+        "lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor ."
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
