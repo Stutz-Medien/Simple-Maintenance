@@ -108,6 +108,12 @@ class Maintenance {
 		$this->toggle_maintenance_mode( $wp_admin_bar );
 	}
 
+	/**
+	 * Toggle maintenance mode
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar instance
+	 * @return void
+	 */
 	private function toggle_maintenance_mode( $wp_admin_bar ): void {
 		$enable_settings = get_option( 'enable_settings' );
 
@@ -132,6 +138,11 @@ class Maintenance {
 		}
 	}
 
+	/**
+	 * Activate maintenance mode
+	 *
+	 * @return void
+	 */
 	public function activate_maintenance_mode() {
 		update_option( 'enable_settings', '1' );
 		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
@@ -139,6 +150,11 @@ class Maintenance {
 		exit;
 	}
 
+	/**
+	 * Deactivate maintenance mode
+	 *
+	 * @return void
+	 */
 	public function deactivate_maintenance_mode() {
 		update_option( 'enable_settings', '0' );
 		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
