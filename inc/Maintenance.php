@@ -67,8 +67,13 @@ class Maintenance {
 				height: 500px; 
 				text-align: center;
 				border: none;
-				box-shadow: none; 
+				box-shadow: 1px 1px 1px rgba(3, 7, 18, 0.08),
+					4px 5px 4px rgba(3, 7, 18, 0.06),
+					9px 12px 9px rgba(3, 7, 18, 0.05),
+					16px 20px 15px rgba(3, 7, 18, 0.03),
+					25px 32px 24px rgba(3, 7, 18, 0.02);
 				background-color: #fff;
+				border-radius: 8px;
 			}
 			h1 { 
 				color: #4295a2; 
