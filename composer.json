@@ -1,6 +1,6 @@
 {
     "name": "utils/maintenance",
-    "description": "Surpresses all comments on your WordPress site.",
+    "description": "Enable maintenance mode on your WordPress page.",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
