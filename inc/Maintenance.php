@@ -25,13 +25,15 @@ class Maintenance {
 		$enable_settings = get_option( 'enable_settings' );
 
 		if ( $enable_settings ) {
-			add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
+			add_action( 'template_redirect', [ $this, 'enable_maintenance' ] );
 		}
 
-		add_action( 'template_redirect', [ $this, 'enable_maintenance' ] );
+		add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
 		add_action( 'admin_bar_menu', [ $this, 'add_maintenance_mode_button' ], 999 );
 		add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
+		add_action( 'admin_post_activate_maintenance_mode', [ $this, 'activate_maintenance_mode' ] );
+		add_action( 'admin_post_deactivate_maintenance_mode', [ $this, 'deactivate_maintenance_mode' ] );
 	}
 
 	/**
@@ -102,6 +104,46 @@ class Maintenance {
 		];
 
 		$wp_admin_bar->add_node( $args );
+
+		$this->toggle_maintenance_mode( $wp_admin_bar );
+	}
+
+	private function toggle_maintenance_mode( $wp_admin_bar ): void {
+		$enable_settings = get_option( 'enable_settings' );
+
+		if ( $enable_settings ) {
+			$wp_admin_bar->add_node(
+				[
+					'id'     => 'deactivate_maintenance_mode',
+					'title'  => 'Deactivate',
+					'href'   => admin_url( 'admin-post.php?action=deactivate_maintenance_mode' ),
+					'parent' => 'maintenance_mode',
+				]
+			);
+		} else {
+			$wp_admin_bar->add_node(
+				[
+					'id'     => 'activate_maintenance_mode',
+					'title'  => 'Activate',
+					'href'   => admin_url( 'admin-post.php?action=activate_maintenance_mode' ),
+					'parent' => 'maintenance_mode',
+				]
+			);
+		}
+	}
+
+	public function activate_maintenance_mode() {
+		update_option( 'enable_settings', '1' );
+		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
+		wp_safe_redirect( $referer );
+		exit;
+	}
+
+	public function deactivate_maintenance_mode() {
+		update_option( 'enable_settings', '0' );
+		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
+		wp_safe_redirect( $referer );
+		exit;
 	}
 
 	/**
