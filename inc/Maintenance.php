@@ -10,10 +10,6 @@
 
 namespace Utils\Plugins;
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) :
-	require_once __DIR__ . '/vendor/autoload.php';
-endif;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -181,7 +177,7 @@ class Maintenance {
 			return;
 		}
 
-		$form = new \Utils\Plugins\Maintenance\Form();
+		$form = new \Utils\Plugins\Maintenance\Layout\Form();
 
 		add_submenu_page(
 			'options-general.php',

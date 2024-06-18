@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-namespace Utils\Plugins\Maintenance;
+namespace Utils\Plugins\Maintenance\Layout;
 
 class Form {
 	public function maintenance_options_page() {
