@@ -15,7 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Maintenance {
-
 	/**
 	 * Register hooks
 	 *
@@ -30,7 +29,6 @@ class Maintenance {
 
 		add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
 		add_action( 'admin_bar_menu', [ $this, 'add_maintenance_mode_button' ], 999 );
-		add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_post_activate_maintenance_mode', [ $this, 'activate_maintenance_mode' ] );
 		add_action( 'admin_post_deactivate_maintenance_mode', [ $this, 'deactivate_maintenance_mode' ] );
@@ -165,28 +163,6 @@ class Maintenance {
 		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		wp_safe_redirect( $referer );
 		exit;
-	}
-
-	/**
-	 * Create settings page
-	 *
-	 * @return void
-	 */
-	public function create_settings_page() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$form = new \Utils\Plugins\Maintenance\Layout\Form();
-
-		add_submenu_page(
-			'options-general.php',
-			'Maintenance Options',
-			'Maintenance',
-			'manage_options',
-			'maintenance-options',
-			array( $form, 'maintenance_options_page' )
-		);
 	}
 
 	/**

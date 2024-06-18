@@ -8,9 +8,46 @@
  * @license MIT
  */
 
-namespace Utils\Plugins\Maintenance\Layout;
+namespace Utils\Plugins;
 
 class Form {
+
+	/**
+	 * Register hooks
+	 *
+	 * @return void
+	 */
+	public function register() {
+		add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
+
+	}
+	
+	/**
+	 * Create settings page
+	 *
+	 * @return void
+	 */
+	public function create_settings_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		add_submenu_page(
+			'options-general.php',
+			'Maintenance Options',
+			'Maintenance',
+			'manage_options',
+			'maintenance-options',
+			array( $this, 'maintenance_options_page' )
+		);
+	}
+
+
+	/**
+	 * Register hooks
+	 *
+	 * @return void
+	 */
 	public function maintenance_options_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;

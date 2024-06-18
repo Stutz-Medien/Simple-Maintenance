@@ -29,3 +29,8 @@ if ( class_exists( 'Utils\\Plugins\\Maintenance' ) ) :
 	$maintenance = new Utils\Plugins\Maintenance();
 	$maintenance->register();
 endif;
+
+if ( class_exists( 'Utils\\Plugins\\Form' ) ) :
+	$form = new Utils\Plugins\Form();
+	$form->register();
+endif;
