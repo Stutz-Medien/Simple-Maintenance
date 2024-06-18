@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Utils\\Plugins\\Maintenance\\": "inc/"
+            "Utils\\Plugins\\": "inc/"
         }
     },
     "require-dev": {
