@@ -182,7 +182,7 @@ class Maintenance {
 			return;
 		}
 
-		$form = new Form();
+		$form = new \Utils\Plugins\Maintenance\Form();
 
 		add_submenu_page(
 			'options-general.php',
