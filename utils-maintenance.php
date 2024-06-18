@@ -9,7 +9,7 @@
  * Plugin Name:   Maintenance
  * Plugin URI:    https://github.com/Stutz-Medien/Maintenance
  * Description:   Lightweight maintenance screen for your WordPress page.
- * Version:       1.0.0
+ * Version:       1.1.0
  * Author:        Stutz Medien
  * Author URI:    https://stutz-medien.ch/
  * Text Domain:   acf
