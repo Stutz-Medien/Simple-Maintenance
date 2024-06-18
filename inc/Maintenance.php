@@ -10,11 +10,6 @@
 
 namespace Utils\Plugins;
 
-use Utils\Plugins\Maintenance\Form;
-
-$plugin_directory_path = plugin_dir_path( __FILE__ );
-require_once $plugin_directory_path . 'Layout/Form.php';
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
