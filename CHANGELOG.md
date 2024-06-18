@@ -12,7 +12,7 @@
 
 ### Improved
 
-- Moved form handlin in a seperate file
+- Moved form handling in a seperate file
 
 ## 1.0.0 (2024-06-03)
 
