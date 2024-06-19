@@ -3,8 +3,8 @@
  * WordPress Theme Feature: Maintenance
  *
  * @since   1.0
- * @package stutz-medien/utils-mainenance
- * @link    https://github.com/Stutz-Medien/Mainenance
+ * @package stutz-medien/utils-maintenance
+ * @link    https://github.com/Stutz-Medien/Simple-Maintenance
  * @license MIT
  */
 
@@ -32,8 +32,12 @@ class Maintenance {
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_post_activate_maintenance_mode', [ $this, 'activate_maintenance_mode' ] );
 		add_action( 'admin_post_deactivate_maintenance_mode', [ $this, 'deactivate_maintenance_mode' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
 	}
 
+	public function enqueue_admin_styles() {
+		wp_enqueue_style( 'maintenance-style', plugin_dir_url( __DIR__ ) . 'assets/dist/css/style.css', [], '1.0.0' );
+	}
 	/**
 	 * Enable maintenance mode
 	 *
