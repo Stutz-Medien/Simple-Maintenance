@@ -3,15 +3,14 @@
  * WordPress Theme Feature: Maintenance
  *
  * @since   1.0
- * @package stutz-medien/utils-mainenance
- * @link    https://github.com/Stutz-Medien/Mainenance
+ * @package stutz-medien/utils-maintenance
+ * @link    https://github.com/Stutz-Medien/Simple-Maintenance
  * @license MIT
  */
 
 namespace Utils\Plugins;
 
 class Form {
-
 	/**
 	 * Register hooks
 	 *
@@ -19,9 +18,8 @@ class Form {
 	 */
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'create_settings_page' ] );
-
 	}
-	
+
 	/**
 	 * Create settings page
 	 *
@@ -86,8 +84,11 @@ class Form {
 	 * @return void
 	 */
 	private function display_form() {
-		echo '<div class="wrap">';
-		echo '<h1>' . esc_html( get_admin_page_title() ) . '</h1>';
+		echo '<div class="wrap maintenance">';
+		echo '<div class="maintenance-header">';
+		echo '<h1 class="main-heading">' . esc_html( get_admin_page_title() ) . '</h1>';
+		echo '<img class="main-logo" src="' . esc_url( plugins_url( 'assets/src/global/logo.svg', __DIR__ ) ) . '" alt="Maintenance" width="100" height="100">';
+		echo '</div>';
 		echo '<form method="post" action="options.php">';
 		wp_nonce_field( 'update-options' );
 
@@ -100,25 +101,24 @@ class Form {
 		$maintenance_title   = get_option( 'maintenance_title' );
 		$maintenance_message = get_option( 'maintenance_message' );
 
-		echo '<table class="form-table">';
-		echo '<tr valign="top">';
-		echo '<th scope="row">Enable Maintenance Screen</th>';
-		echo '<td><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( 1, $enable_settings, false ) . ' /></td>';
-		echo '</tr>';
-		echo '<tr valign="top">';
-		echo '<th scope="row">Maintenance Texts</th>';
-		echo '</tr>';
-		echo '<tr valign="top">';
-		echo "<td><input type='text' name='maintenance_title' value='" . esc_attr( $maintenance_title ) . "' /></td>";
-		echo '</tr>';
-		echo '<tr valign="top">';
-		echo '<td><textarea type="text" id="maintenance_message" name="maintenance_message">' . esc_textarea( $maintenance_message ) . '</textarea></td>';
-		echo '</tr>';
-		echo '</table>';
+		echo '<div class="maintenance-inner">';
+		echo '<div class="maintenance-field flex-field">';
+		echo '<h2 scope="row">Enable Maintenance Screen</h2>';
+		echo '<span><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( 1, $enable_settings, false ) . ' /></span>';
+		echo '</div>';
+		echo '<h2>Maintenance Texts</h2>';
+		echo '<div class="maintenance-field">';
+		echo "<div><p>Title</p><input type='text' name='maintenance_title' value='" . esc_attr( $maintenance_title ) . "' /></div>";
+		echo '</div>';
+		echo '<div class="maintenance-field">';
+		echo '<div><p>Text</p><textarea type="text" id="maintenance_message" name="maintenance_message">' . esc_textarea( $maintenance_message ) . '</textarea></div>';
+		echo '</div>';
+		echo '</div>';
 
 		submit_button( 'Save Settings' );
 
 		echo '</form>';
+		echo '<p>Coded with ❤️ by <a href="https://stutz-medien.ch" target="_blank">Stutz Medien</a></p>';
 		echo '</div>';
 	}
 }
