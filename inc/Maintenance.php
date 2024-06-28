@@ -33,11 +33,31 @@ class Maintenance {
 		add_action( 'admin_post_activate_maintenance_mode', [ $this, 'activate_maintenance_mode' ] );
 		add_action( 'admin_post_deactivate_maintenance_mode', [ $this, 'deactivate_maintenance_mode' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
+		add_filter( 'site_transient_update_plugins', [ $this, 'disable_plugin_updates' ] );
 	}
 
+	/**
+	 * Register maintenance admin styles
+	 *
+	 * @return void
+	 */
 	public function enqueue_admin_styles() {
-		wp_enqueue_style( 'maintenance-style', plugin_dir_url( __DIR__ ) . 'assets/dist/css/style.css', [], '1.0.0' );
+		wp_enqueue_style( 'maintenance-style', plugin_dir_url( __DIR__ ) . 'assets/dist/css/style.css', [], '1.2.1' );
 	}
+
+	/**
+	 * Disable plugin updates
+	 *
+	 * @param object $transient transient object
+	 * @return object
+	 */
+	public function disable_plugin_updates( $transient ) {
+		if ( isset( $transient->response['maintenance/utils-maintenance.php'] ) ) {
+			unset( $transient->response['maintenance/utils-maintenance.php'] );
+		}
+		return $transient;
+	}
+
 	/**
 	 * Enable maintenance mode
 	 *

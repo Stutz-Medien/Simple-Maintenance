@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 (2024-06-28)
+
+### Fixed
+
+- Disable WordPress update check for this plugin
+
 ## 1.2.0 (2024-06-20)
 
 ### Added
