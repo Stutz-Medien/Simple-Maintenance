@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.3.0 (2024-07-08)
+
+### Added
+
+- Custom logo selector from media library
+- Dynamic logo preview
+
+### Fixed
+
+- Correct image aspect ratio
+- Title spacing
+
+### Improved
+
+- Stricter versioning
+
 ## 1.2.1 (2024-06-28)
 
 ### Fixed

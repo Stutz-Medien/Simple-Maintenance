@@ -24,12 +24,23 @@
             height: 200px;
             resize: none;
         }
+
+        &-title {
+            margin-top: 30px;
+        }
     }
 
     .flex-field {
         display: flex;
         align-items: center;
         gap: 30px;
+    }
+
+    .select-field {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 15px 0;
     }
 
     .main-heading {
