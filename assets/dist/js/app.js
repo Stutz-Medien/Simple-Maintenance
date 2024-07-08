@@ -1,1 +1,1 @@
-"use strict";(()=>{})();
+"use strict";(()=>{document.addEventListener("DOMContentLoaded",()=>{let e=document.querySelector("#upload_logo_button");e&&e.addEventListener("click",o=>{o.preventDefault();let n=wp.media({title:"Upload Logo",library:{type:"image"},multiple:!1}).open().on("select",()=>{let a=n.state().get("selection").first().toJSON().url,t=document.querySelector("#maintenance_logo");t&&(t.value=a)})})});})();

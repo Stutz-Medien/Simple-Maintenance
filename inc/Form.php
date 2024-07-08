@@ -75,6 +75,9 @@ class Form {
 
 			$maintenance_message = isset( $_POST['maintenance_message'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_message'] ) ) : '';
 			update_option( 'maintenance_message', $maintenance_message );
+
+			$maintenance_logo = isset( $_POST['maintenance_logo'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_logo'] ) ) : '';
+			update_option( 'maintenance_logo', $maintenance_logo );
 		}
 	}
 
@@ -106,6 +109,14 @@ class Form {
 		echo '<h2 scope="row">Enable Maintenance Screen</h2>';
 		echo '<span><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( 1, $enable_settings, false ) . ' /></span>';
 		echo '</div>';
+		echo '<h2>Maintenance Logo</h2>';
+		echo '<div class="maintenance-field">';
+		echo '<img src="' . esc_url( get_option( 'maintenance_logo' ) ) . '" alt="Logo" width="150" height="150">';
+		echo '<div>';
+		echo '<p>Logo URL</p><input type="text" id="maintenance_logo" name="maintenance_logo" value="' . esc_attr( get_option( 'maintenance_logo' ) ) . '" />';
+		echo '<button type="button" class="button" id="upload_logo_button">Select from Library</button>';
+		echo '</div>';
+		echo '</div>';
 		echo '<h2>Maintenance Texts</h2>';
 		echo '<div class="maintenance-field">';
 		echo "<div><p>Title</p><input type='text' name='maintenance_title' value='" . esc_attr( $maintenance_title ) . "' /></div>";
@@ -119,6 +130,7 @@ class Form {
 
 		echo '</form>';
 		echo '<p>Coded with ❤️ by <a href="https://stutz-medien.ch" target="_blank">Stutz Medien</a></p>';
+		echo '<small>v' . esc_html( UTILS_MAINTENANCE_VERSION ) . '</small>';
 		echo '</div>';
 	}
 }

@@ -16,11 +16,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Maintenance {
 	/**
+	 * Default logo location
+	 *
+	 * @var string
+	 */
+	private $default_logo_location;
+
+	/**
+	 * Default title
+	 *
+	 * @var string
+	 */
+	private $default_title = 'Site Under Maintenance';
+
+	/**
+	 * Default message
+	 *
+	 * @var string
+	 */
+	private $default_message = 'We are currently performing scheduled maintenance. Please check back later.';
+
+	/**
 	 * Register hooks
 	 *
 	 * @return void
 	 */
 	public function register() {
+		$this->default_logo_location = plugin_dir_url( __DIR__ ) . 'assets/src/global/logo.svg';
+
 		$enable_settings = get_option( 'enable_settings' );
 
 		if ( $enable_settings ) {
@@ -33,7 +56,17 @@ class Maintenance {
 		add_action( 'admin_post_activate_maintenance_mode', [ $this, 'activate_maintenance_mode' ] );
 		add_action( 'admin_post_deactivate_maintenance_mode', [ $this, 'deactivate_maintenance_mode' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_styles' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
 		add_filter( 'site_transient_update_plugins', [ $this, 'disable_plugin_updates' ] );
+	}
+
+	/**
+	 * Get the default logo location
+	 *
+	 * @return string
+	 */
+	public function get_default_logo_location() {
+		return isset( $this->default_logo_location ) ? $this->default_logo_location : '';
 	}
 
 	/**
@@ -42,7 +75,17 @@ class Maintenance {
 	 * @return void
 	 */
 	public function enqueue_admin_styles() {
-		wp_enqueue_style( 'maintenance-style', plugin_dir_url( __DIR__ ) . 'assets/dist/css/style.css', [], '1.2.1' );
+		wp_enqueue_style( 'maintenance-style', plugin_dir_url( __DIR__ ) . 'assets/dist/css/style.css', [], UTILS_MAINTENANCE_VERSION );
+	}
+
+	/**
+	 * Register maintenance admin scripts
+	 *
+	 * @return void
+	 */
+	public function enqueue_admin_scripts() {
+		wp_enqueue_media();
+		wp_enqueue_script( 'maintenance-script', plugin_dir_url( __DIR__ ) . 'assets/dist/js/app.js', [], UTILS_MAINTENANCE_VERSION, true );
 	}
 
 	/**
@@ -65,9 +108,9 @@ class Maintenance {
 	 */
 	public function enable_maintenance() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$title = get_option( 'maintenance_title', 'Site Under Maintenance' );
-			$text  = get_option( 'maintenance_message', 'We are currently performing scheduled maintenance. Please check back later.' );
-			$img   = '<img src="' . plugin_dir_url( __DIR__ ) . 'assets/src/global/logo.svg" alt="Maintenance">';
+			$title = get_option( 'maintenance_title', $this->default_title );
+			$text  = get_option( 'maintenance_message', $this->default_message );
+			$img   = '<img src="' . get_option( 'maintenance_logo', $this->get_default_logo_location() ) . '" alt="Maintenance">';
 
 			$allowed_html = array(
 				'h1'    => array(),
@@ -224,5 +267,52 @@ class Maintenance {
 				'default'           => 'Site is under maintenance. Please check back later.',
 			)
 		);
+
+		register_setting(
+			'maintenance-settings-group',
+			'maintenance_logo',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'esc_url_raw',
+				'default'           => $this->get_default_logo_location(),
+			)
+		);
+
+		add_settings_section(
+			'maintenance-settings-section',
+			'Image Settings',
+			[ $this, 'maintenance_settings_section_callback' ],
+			'maintenance-settings'
+		);
+
+		add_settings_field(
+			'maintenance_logo',
+			'Logo',
+			[ $this, 'maintenance_logo_callback' ],
+			'maintenance-settings',
+			'maintenance-settings-section'
+		);
+	}
+
+	/**
+	 * Maintenance settings section callback
+	 *
+	 * @return void
+	 */
+	public function maintenance_settings_section_callback() {
+		echo '<p>Upload your logo here</p>';
+	}
+
+	/**
+	 * Maintenance logo callback
+	 *
+	 * @return void
+	 */
+	public function maintenance_logo_callback() {
+		$logo = get_option( 'maintenance_logo', $this->get_default_logo_location() );
+		?>
+		<input type="text" name="maintenance_logo" id="maintenance_logo" value="<?php echo esc_url( $logo ); ?>" class="regular-text">
+		<button class="button" id="upload_logo">Upload Logo</button>
+		<?php
 	}
 }
