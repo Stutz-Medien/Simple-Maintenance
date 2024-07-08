@@ -150,7 +150,7 @@ class Maintenance {
 			}
 			img { 
 				width: 150px; 
-				height: 150px; 
+				height: auto; 
 			}
 			</style>';
 

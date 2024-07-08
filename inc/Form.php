@@ -111,10 +111,10 @@ class Form {
 		echo '</div>';
 		echo '<h2>Maintenance Logo</h2>';
 		echo '<div class="maintenance-field">';
-		echo '<img src="' . esc_url( get_option( 'maintenance_logo' ) ) . '" alt="Logo" width="150" height="150">';
+		echo '<img id="maintenance-logo-preview" src="' . esc_url( get_option( 'maintenance_logo' ) ) . '" alt="Logo" width="150" height="auto">';
 		echo '<div>';
-		echo '<p>Logo URL</p><input type="text" id="maintenance_logo" name="maintenance_logo" value="' . esc_attr( get_option( 'maintenance_logo' ) ) . '" />';
-		echo '<button type="button" class="button" id="upload_logo_button">Select from Library</button>';
+		echo '<p>Logo URL</p><input type="text" id="maintenance-logo" name="maintenance_logo" value="' . esc_attr( get_option( 'maintenance_logo' ) ) . '" />';
+		echo '<button type="button" class="button" id="upload-logo-button">Select from Library</button>';
 		echo '</div>';
 		echo '</div>';
 		echo '<h2>Maintenance Texts</h2>';
