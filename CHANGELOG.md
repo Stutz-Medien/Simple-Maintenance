@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.1 (2024-07-09)
+
+### Fixed
+
+- Removed not needed code
+
+### Improved
+
+- Code quality
+- General performance
+
 ## 1.3.0 (2024-07-08)
 
 ### Added
