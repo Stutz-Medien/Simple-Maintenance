@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2 (2024-07-09)
+
+### Fixed
+
+- Moved maintenance screen admin_init into if statement
+
 ## 1.3.1 (2024-07-09)
 
 ### Fixed
