@@ -48,9 +48,9 @@ class Maintenance {
 
 		if ( $enable_settings ) {
 			add_action( 'template_redirect', [ $this, 'enable_maintenance' ] );
+			add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
 		}
 
-		add_action( 'admin_init', [ $this, 'enable_maintenance' ] );
 		add_action( 'admin_bar_menu', [ $this, 'add_maintenance_mode_button' ], 999 );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_post_activate_maintenance_mode', [ $this, 'activate_maintenance_mode' ] );
