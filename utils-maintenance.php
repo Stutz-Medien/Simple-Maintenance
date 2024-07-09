@@ -9,7 +9,7 @@
  * Plugin Name:   Maintenance
  * Plugin URI:    https://github.com/Stutz-Medien/Maintenance
  * Description:   Lightweight maintenance screen for your WordPress page.
- * Version:       1.3.0
+ * Version:       1.3.1
  * Author:        Stutz Medien
  * Author URI:    https://stutz-medien.ch/
  * Text Domain:   acf
@@ -20,18 +20,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'UTILS_MAINTENANCE_VERSION', '1.3.0' );
+define( 'UTILS_MAINTENANCE_VERSION', '1.3.1' );
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) :
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
-endif;
+}
 
-if ( class_exists( 'Utils\\Plugins\\Maintenance' ) ) :
-	$maintenance = new Utils\Plugins\Maintenance();
-	$maintenance->register();
-endif;
+function register_class( $class_name ) {
+	if ( class_exists( $class_name ) ) {
+		$instance = new $class_name();
+		if ( method_exists( $instance, 'register' ) ) {
+			$instance->register();
+		}
+	}
+}
 
-if ( class_exists( 'Utils\\Plugins\\Form' ) ) :
-	$form = new Utils\Plugins\Form();
-	$form->register();
-endif;
+register_class( 'Utils\\Plugins\\Maintenance' );
+register_class( 'Utils\\Plugins\\Form' );
