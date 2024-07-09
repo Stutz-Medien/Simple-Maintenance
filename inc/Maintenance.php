@@ -254,7 +254,7 @@ class Maintenance {
 			array(
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'Maintenance Mode',
+				'default'           => $this->default_title,
 			)
 		);
 
@@ -264,7 +264,7 @@ class Maintenance {
 			array(
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'Site is under maintenance. Please check back later.',
+				'default'           => $this->default_message,
 			)
 		);
 
@@ -277,42 +277,5 @@ class Maintenance {
 				'default'           => $this->get_default_logo_location(),
 			)
 		);
-
-		add_settings_section(
-			'maintenance-settings-section',
-			'Image Settings',
-			[ $this, 'maintenance_settings_section_callback' ],
-			'maintenance-settings'
-		);
-
-		add_settings_field(
-			'maintenance_logo',
-			'Logo',
-			[ $this, 'maintenance_logo_callback' ],
-			'maintenance-settings',
-			'maintenance-settings-section'
-		);
-	}
-
-	/**
-	 * Maintenance settings section callback
-	 *
-	 * @return void
-	 */
-	public function maintenance_settings_section_callback() {
-		echo '<p>Upload your logo here</p>';
-	}
-
-	/**
-	 * Maintenance logo callback
-	 *
-	 * @return void
-	 */
-	public function maintenance_logo_callback() {
-		$logo = get_option( 'maintenance_logo', $this->get_default_logo_location() );
-		?>
-		<input type="text" name="maintenance_logo" id="maintenance_logo" value="<?php echo esc_url( $logo ); ?>" class="regular-text">
-		<button class="button" id="upload_logo">Upload Logo</button>
-		<?php
 	}
 }

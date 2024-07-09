@@ -101,6 +101,7 @@ class Form {
 
 		$enable_settings = get_option( 'enable_settings' );
 
+		$maintenance_logo    = get_option( 'maintenance_logo' );
 		$maintenance_title   = get_option( 'maintenance_title' );
 		$maintenance_message = get_option( 'maintenance_message' );
 
@@ -111,11 +112,11 @@ class Form {
 		echo '</div>';
 		echo '<h2 class="maintenance-field-title">Maintenance Logo</h2>';
 		echo '<div class="maintenance-field">';
-		echo '<img id="maintenance-logo-preview" src="' . esc_url( get_option( 'maintenance_logo' ) ) . '" alt="Logo" width="150" height="auto">';
+		echo '<img id="maintenance-logo-preview" src="' . esc_url( $maintenance_logo ) . '" alt="Logo" width="150" height="auto">';
 		echo '<div class="maintenance-field">';
 		echo '<p>Logo URL</p>';
 		echo '<div class="select-field">';
-		echo '<input type="text" id="maintenance-logo" name="maintenance_logo" value="' . esc_attr( get_option( 'maintenance_logo' ) ) . '" />';
+		echo '<input type="text" id="maintenance-logo" name="maintenance_logo" value="' . esc_attr( $maintenance_logo ) . '" />';
 		echo '<button type="button" class="button" id="upload-logo-button">Select from Library</button>';
 		echo '</div>';
 		echo '</div>';
