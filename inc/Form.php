@@ -76,6 +76,9 @@ class Form {
 			$maintenance_message = isset( $_POST['maintenance_message'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_message'] ) ) : '';
 			update_option( 'maintenance_message', $maintenance_message );
 
+			$maintenance_title_color = isset( $_POST['maintenance_title_color'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_title_color'] ) ) : '';
+			update_option( 'maintenance_title_color', $maintenance_title_color );
+
 			$maintenance_logo = isset( $_POST['maintenance_logo'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_logo'] ) ) : '';
 			update_option( 'maintenance_logo', $maintenance_logo );
 		}
@@ -101,9 +104,10 @@ class Form {
 
 		$enable_settings = get_option( 'enable_settings' );
 
-		$maintenance_logo    = get_option( 'maintenance_logo' );
-		$maintenance_title   = get_option( 'maintenance_title' );
-		$maintenance_message = get_option( 'maintenance_message' );
+		$maintenance_logo        = get_option( 'maintenance_logo' );
+		$maintenance_title       = get_option( 'maintenance_title' );
+		$maintenance_message     = get_option( 'maintenance_message' );
+		$maintenance_title_color = get_option( 'maintenance_title_color' );
 
 		echo '<div class="maintenance-inner">';
 		echo '<div class="maintenance-field flex-field">';
@@ -124,6 +128,9 @@ class Form {
 		echo '<h2 class="maintenance-field-title">Maintenance Texts</h2>';
 		echo '<div class="maintenance-field">';
 		echo "<div><p>Title</p><input type='text' name='maintenance_title' value='" . esc_attr( $maintenance_title ) . "' /></div>";
+		echo '</div>';
+		echo '<div class="maintenance-field">';
+		echo "<div><p>Title Color</p><input type='text' name='maintenance_title_color' value='" . esc_attr( $maintenance_title_color ) . "' /></div>";
 		echo '</div>';
 		echo '<div class="maintenance-field">';
 		echo '<div><p>Text</p><textarea type="text" id="maintenance_message" name="maintenance_message">' . esc_textarea( $maintenance_message ) . '</textarea></div>';

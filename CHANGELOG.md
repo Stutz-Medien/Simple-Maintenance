@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.3 (2024-07-29)
+
+### Added
+
+- Option to select a custom title color
+
+### Fixed
+
+- Change check so enable is the first option when first enabling the plugin
+
 ## 1.3.2 (2024-07-09)
 
 ### Fixed
