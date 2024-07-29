@@ -37,6 +37,13 @@ class Maintenance {
 	private $default_message = 'We are currently performing scheduled maintenance. Please check back later.';
 
 	/**
+	 * Default title color
+	 *
+	 * @var string
+	 */
+	private $default_title_color = '#000000';
+
+	/**
 	 * Register hooks
 	 *
 	 * @return void
@@ -108,9 +115,10 @@ class Maintenance {
 	 */
 	public function enable_maintenance() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$title = get_option( 'maintenance_title', $this->default_title );
-			$text  = get_option( 'maintenance_message', $this->default_message );
-			$img   = '<img src="' . get_option( 'maintenance_logo', $this->get_default_logo_location() ) . '" alt="Maintenance">';
+			$title       = get_option( 'maintenance_title', $this->default_title );
+			$text        = get_option( 'maintenance_message', $this->default_message );
+			$title_color = get_option( 'maintenance_title_color', $this->default_title_color );
+			$img         = '<img src="' . get_option( 'maintenance_logo', $this->get_default_logo_location() ) . '" alt="Maintenance">';
 
 			$allowed_html = array(
 				'h1'    => array(),
@@ -141,7 +149,7 @@ class Maintenance {
 				border-radius: 8px;
 			}
 			h1 { 
-				color: #4295a2; 
+				color: ' . esc_attr( $title_color ) . '; 
 				border: none;
 			}
 			p { 
@@ -265,6 +273,16 @@ class Maintenance {
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 				'default'           => $this->default_message,
+			)
+		);
+
+		register_setting(
+			'maintenance-settings-group',
+			'maintenance_title_color',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => $this->default_title_color,
 			)
 		);
 
