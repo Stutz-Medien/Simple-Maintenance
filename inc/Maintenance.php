@@ -187,21 +187,21 @@ class Maintenance {
 	private function toggle_maintenance_mode( $wp_admin_bar ): void {
 		$enable_settings = get_option( 'enable_settings' );
 
-		if ( $enable_settings ) {
+		if ( ! $enable_settings ) {
 			$wp_admin_bar->add_node(
 				[
-					'id'     => 'deactivate_maintenance_mode',
-					'title'  => 'Deactivate',
-					'href'   => admin_url( 'admin-post.php?action=deactivate_maintenance_mode' ),
+					'id'     => 'activate_maintenance_mode',
+					'title'  => 'Activate',
+					'href'   => admin_url( 'admin-post.php?action=activate_maintenance_mode' ),
 					'parent' => 'maintenance_mode',
 				]
 			);
 		} else {
 			$wp_admin_bar->add_node(
 				[
-					'id'     => 'activate_maintenance_mode',
-					'title'  => 'Activate',
-					'href'   => admin_url( 'admin-post.php?action=activate_maintenance_mode' ),
+					'id'     => 'deactivate_maintenance_mode',
+					'title'  => 'Deactivate',
+					'href'   => admin_url( 'admin-post.php?action=deactivate_maintenance_mode' ),
 					'parent' => 'maintenance_mode',
 				]
 			);
