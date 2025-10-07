@@ -250,7 +250,7 @@ class Maintenance {
 			'maintenance-settings-group',
 			'enable_settings',
 			array(
-				'type'              => 'string',
+				'type'              => 'boolean',
 				'sanitize_callback' => 'sanitize_text_field',
 				'default'           => false,
 			)
