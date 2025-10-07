@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.3.4 (2025-10-07)
 
+### Changed
+
+- Switch from strings to true/false for the `enable_settings` option
+
+### Fixed
+
+- Add a default value for the `enable_settings` option
+
 ### Security
 
 - Update `cross-spawn` to >=7.0.5

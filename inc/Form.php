@@ -67,7 +67,7 @@ class Form {
 				wp_die( 'Nonce verification failed' );
 			}
 
-			$enable_settings = isset( $_POST['enable_settings'] ) ? 1 : 0;
+			$enable_settings = isset( $_POST['enable_settings'] ) ? true : false;
 			update_option( 'hide_settings', $enable_settings );
 
 			$maintenance_title = isset( $_POST['maintenance_title'] ) ? sanitize_text_field( wp_unslash( $_POST['maintenance_title'] ) ) : '';
@@ -102,7 +102,7 @@ class Form {
 
 		do_settings_sections( 'maintenance-options' );
 
-		$enable_settings = get_option( 'enable_settings' );
+		$enable_settings = get_option( 'enable_settings', false );
 
 		$maintenance_logo        = get_option( 'maintenance_logo' );
 		$maintenance_title       = get_option( 'maintenance_title' );
@@ -112,7 +112,7 @@ class Form {
 		echo '<div class="maintenance-inner">';
 		echo '<div class="maintenance-field flex-field">';
 		echo '<h2 scope="row">Enable Maintenance Screen</h2>';
-		echo '<span><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( 1, $enable_settings, false ) . ' /></span>';
+		echo '<span><input type="checkbox" id="enable_settings" name="enable_settings" value="1" ' . checked( true, $enable_settings, false ) . ' /></span>';
 		echo '</div>';
 		echo '<h2 class="maintenance-field-title">Maintenance Logo</h2>';
 		echo '<div class="maintenance-field">';

@@ -51,7 +51,7 @@ class Maintenance {
 	public function register() {
 		$this->default_logo_location = plugin_dir_url( __DIR__ ) . 'assets/src/global/logo.svg';
 
-		$enable_settings = get_option( 'enable_settings' );
+		$enable_settings = get_option( 'enable_settings', false );
 
 		if ( $enable_settings ) {
 			add_action( 'template_redirect', [ $this, 'enable_maintenance' ] );
@@ -193,7 +193,7 @@ class Maintenance {
 	 * @return void
 	 */
 	private function toggle_maintenance_mode( $wp_admin_bar ): void {
-		$enable_settings = get_option( 'enable_settings', '0' );
+		$enable_settings = get_option( 'enable_settings', false );
 
 		if ( ! $enable_settings ) {
 			$wp_admin_bar->add_node(
@@ -222,7 +222,7 @@ class Maintenance {
 	 * @return void
 	 */
 	public function activate_maintenance_mode() {
-		update_option( 'enable_settings', '1' );
+		update_option( 'enable_settings', true );
 		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		wp_safe_redirect( $referer );
 		exit;
@@ -234,7 +234,7 @@ class Maintenance {
 	 * @return void
 	 */
 	public function deactivate_maintenance_mode() {
-		update_option( 'enable_settings', '0' );
+		update_option( 'enable_settings', false );
 		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		wp_safe_redirect( $referer );
 		exit;
@@ -252,7 +252,7 @@ class Maintenance {
 			array(
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'none',
+				'default'           => false,
 			)
 		);
 
