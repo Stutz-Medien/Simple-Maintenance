@@ -193,7 +193,7 @@ class Maintenance {
 	 * @return void
 	 */
 	private function toggle_maintenance_mode( $wp_admin_bar ): void {
-		$enable_settings = get_option( 'enable_settings' );
+		$enable_settings = get_option( 'enable_settings', '0' );
 
 		if ( ! $enable_settings ) {
 			$wp_admin_bar->add_node(
