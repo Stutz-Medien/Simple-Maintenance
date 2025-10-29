@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Moved project to GPL license to comply with WordPress
+- Move project to GPL license to comply with WordPress
 
 ## 1.3.4 (2025-10-07)
 
