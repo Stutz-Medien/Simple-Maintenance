@@ -26,4 +26,4 @@ If you encounter any issues or have any questions about the Maintenance plugin, 
 
 ## License
 
-The Maintenance plugin is released under the [MIT License](https://opensource.org/licenses/MIT).
+The Maintenance plugin is released under the [GNU General Public License v2.0 or later](https://www.gnu.org/licenses/gpl-2.0.html).

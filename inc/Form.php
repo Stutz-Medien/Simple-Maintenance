@@ -5,7 +5,7 @@
  * @since   1.0
  * @package stutz-medien/utils-maintenance
  * @link    https://github.com/Stutz-Medien/Simple-Maintenance
- * @license MIT
+ * @license GPL-2.0-or-later
  */
 
 namespace Utils\Plugins;
